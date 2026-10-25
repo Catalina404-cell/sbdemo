@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: demo
+  datasource:
+    url: jdbc:mysql://localhost:3307/demo
+    username: CATABAKA
+    password: "ZSX521521"
