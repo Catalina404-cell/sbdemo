@@ -1,5 +1,5 @@
 package com.example.demo.Controller;
-
+import java.util.List;
 import com.example.demo.Dto.RecordDto;
 import com.example.demo.Service.RecordService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +35,16 @@ public class RecordController {
     @GetMapping("/select")
     public RecordDto selectLatest() {
         return recordService.selectLatest();
+    }
+    @GetMapping("/selectById")
+    public RecordDto selectById(@RequestParam("id") Long id) {
+        RecordDto dto =new RecordDto();
+        dto.setId(id);
+        return recordService.selectById(dto);
+    }
+    @GetMapping("/list")
+    public List<RecordDto> list(){
+        return recordService.list();
     }
     @GetMapping("/update")
     public String updateLatest(@RequestParam("name") String name){

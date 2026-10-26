@@ -4,8 +4,8 @@ import com.example.demo.Dto.RecordDto;
 import com.example.demo.Dao.RecordDao;
 import com.example.demo.Service.RecordService;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 @Service
 public class RecordServiceImpl implements RecordService {
         private final RecordDao recordDao;
@@ -35,6 +35,20 @@ public class RecordServiceImpl implements RecordService {
             return dto;
         }
         @Override
+        public RecordDto selectById(RecordDto dto){
+            RecordEntity entity=recordDao.selectById(dto.getId());
+            RecordDto result=new RecordDto();
+            if(entity==null){
+                result.setMessage("记录不存在");
+                return result;
+            }
+
+            result.setId(entity.getId());
+            result.setName(entity.getName());
+            result.setVisitTime(entity.getVisitTime());
+            return result;
+        }
+        @Override
         public String updateLatest(RecordDto dto){
             if(recordDao.selectLatest()==null){
                 return"暂无记录";
@@ -51,6 +65,19 @@ public class RecordServiceImpl implements RecordService {
                 return "暂无记录";
             }
             return "已删除一条最新消息";
+        }
+        @Override
+        public List<RecordDto> list(){
+            List<RecordEntity> entities=recordDao.selectAll();
+            List<RecordDto> results=new ArrayList<>();
+            for(RecordEntity entity : entities){
+                RecordDto dto=new RecordDto();
+                dto.setId(entity.getId());
+                dto.setVisitTime(entity.getVisitTime());
+                dto.setName(entity.getName());
+                results.add(dto);
+            }
+            return results;
         }
 
 }

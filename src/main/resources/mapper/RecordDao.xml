@@ -27,6 +27,16 @@
         ORDER BY id DESC
         LIMIT 1
     </select>
+    <select id="selectById" resultType="com.example.demo.Entity.RecordEntity">
+        SELECT id, name, visitTime
+        FROM record
+        WHERE id=#{id}
+    </select>
+    <select id="selectAll" resultType="com.example.demo.Entity.RecordEntity">
+        SELECT id, name, visitTime
+        FROM record
+        ORDER BY id DESC
+    </select>
 
     <!-- 修改最新记录的名称，并刷新访问时间 -->
     <update id="updateLatest">

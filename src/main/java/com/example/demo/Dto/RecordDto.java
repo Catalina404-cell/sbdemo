@@ -1,5 +1,8 @@
 package com.example.demo.Dto;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
+@JsonInclude(JsonInclude.Include.NON_NULL)//隐藏值为null的变量
 public class RecordDto {
     private Long id;
     private LocalDateTime visitTime;
@@ -18,7 +21,7 @@ public class RecordDto {
     public void setVisitTime(LocalDateTime visitTime){
         this.visitTime=visitTime;
     }
-    public String getmessage(){
+    public String getMessage(){
         return message;
     }
     public void setMessage(String message){

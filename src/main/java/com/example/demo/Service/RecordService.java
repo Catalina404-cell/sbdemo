@@ -2,10 +2,14 @@ package com.example.demo.Service;
 
 import com.example.demo.Dto.RecordDto;
 
-import java.util.Map;
+import java.util.List;
+
 public interface RecordService {
     int add(RecordDto dto);
     RecordDto selectLatest();
     String updateLatest(RecordDto dto);
     String deleteLatest();
+
+    RecordDto selectById(RecordDto dto);
+    List<RecordDto> list();
 }
