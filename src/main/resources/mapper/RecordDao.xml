@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 DAO 接口的完整包名，注意 Dao 的大小写 -->
+<mapper namespace="com.example.demo.Dao.RecordDao">
+
+    <!-- 把数据库列映射到 RecordEntity 的字段 -->
+    <resultMap id="recordResultMap"
+               type="com.example.demo.Entity.RecordEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="visitTime" property="visitTime"/>
+    </resultMap>
+
+    <!-- id 对应 DAO 的 add() 方法 -->
+    <!-- #{name} 读取传入 Entity 的 name 属性，并通过参数绑定传给数据库 -->
+    <insert id="add">
+        INSERT INTO record (name, visitTime)
+        VALUES (#{name}, NOW())
+    </insert>
+    <!-- 查询编号最大的一条，并转换成 RecordEntity -->
+    <!-- 查询时把名称一起取出来 -->
+    <select id="selectLatest" resultMap="recordResultMap">
+        SELECT id, name, visitTime
+        FROM record
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <!-- 修改最新记录的名称，并刷新访问时间 -->
+    <update id="updateLatest">
+        UPDATE record
+        SET name = #{name},
+        visitTime = NOW()
+        ORDER BY id DESC
+        LIMIT 1
+    </update>
+
+    <!-- 只删除最新一条 -->
+    <delete id="deleteLatest">
+        DELETE FROM record
+        ORDER BY id DESC
+        LIMIT 1
+    </delete>
+
+</mapper>
